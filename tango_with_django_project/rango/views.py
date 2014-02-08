@@ -4,6 +4,12 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from rango.models import Category, Page
 
+def encode(item):
+	return item.replace(' ', '_')
+
+def decode(item):
+	return item.replace('_', ' ')
+
 def index(request):
 	# Obtain the context from the HTTP request
 	context = RequestContext(request)
@@ -14,8 +20,10 @@ def index(request):
 
 	category_list = Category.objects.order_by('-likes')[:5]
 	for category in category_list:
-		category.url = category.name.replace(' ', '_')
-	context_dict = {'categories' : category_list}
+		#category.url = category.name.replace(' ', '_')
+		category.url = encode(category.name)
+	page_list = Page.objects.order_by('-views')[:5]
+	context_dict = {'categories' : category_list, 'pages' : page_list}
 	return render_to_response('rango/index.html', context_dict, context)
 
 def about(request):
@@ -26,7 +34,7 @@ def about(request):
 def category(request, category_name_url):
 	context = RequestContext(request)
 
-	category_name = category_name_url.replace('_', ' ')
+	category_name = decode(category_name_url) #category_name_url.replace('_', ' ')
 	context_dict = {'category_name' : category_name}
 	try:
 		category = Category.objects.get(name=category_name)
@@ -36,10 +44,3 @@ def category(request, category_name_url):
 	except Category.DoesNotExist:
 		pass
 	return render_to_response('rango/category.html', context_dict, context)
-
-
-
-
-
-
-
