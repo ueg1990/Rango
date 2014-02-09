@@ -49,7 +49,7 @@ def category(request, category_name_url):
 def add_category(request):
 	context = RequestContext(request)
 	if request.method == 'POST':
-		form.CategoryForm(request.POST)
+		form = CategoryForm(request.POST)
 		if form.is_valid():
 			form.save(commit=True)
 			return index(request)

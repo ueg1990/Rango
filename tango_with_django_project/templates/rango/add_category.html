@@ -7,26 +7,26 @@
     <body>
         <h1>Add a Category</h1>
 
-        {% if not category_name_url %}
+        <!-- {% if not category_name_url %}
             <div style="color: red;">The specified category does not exist!</div>
-        {% else %}
-            <form id="category_form" method="post" action="/rango/add_category/">
+        {% else %} -->
+        <form id="category_form" method="post" action="/rango/add_category/">
 
-                {% csrf_token %}
-                {% for hidden in form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
 
-                {% for field in form.visible_fields %}
-                    {{ field.errors }}
-                    {{ field.help_text}}
-                    {{ field }}
-                {% endfor %}
-
-                <input type="submit" name="submit" value="Create Category" />
-            </form>
-        {% endif %}
-
+            {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field.help_text}}<br/>
+                {{ field }}
+            {% endfor %}
+             <br/>
+          <button class="btn btn-primary" type="submit" name="submit">Create Category</button>
+        </form>
+        <!-- {% endif %}
+ -->
     </body>
 
 </html>
