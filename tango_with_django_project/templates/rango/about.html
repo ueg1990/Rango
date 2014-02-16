@@ -1,19 +1,13 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
 {% load static %}
 
-<html>
-	<head>
-		<title>About Me</title>
-		<link rel="stylesheet" href="{% static "css/base.css" %}" />
-		<script src="{% static "js/jquery.js" %}"></script>
-	</head>
+{% block title %}About Me{% endblock %}
 
-	<body>
+{% block body_block %}
 		<h1>UE</h1>
 		Trying to learn <strong> {{ django }}</strong>!!!<br />
 		<h1>Profile Picture:</h1>
 		<img src="{% static "messi.jpeg " %}" alt="Picture of Messi" /><br>
-		<a href="/rango/">Back to Home Page</a><br />
-	</body>
+		
+{% endblock %}
 
-</html>
