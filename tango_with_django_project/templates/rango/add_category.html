@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rango</title>
-    </head>
+{% extends 'rango/base.html' %}
 
-    <body>
+    {% block body_block %}
         <h1>Add a Category</h1>
 
-       <!--  {% if not category_name_url %}
-            <div style="color: red;">The specified category does not exist!</div>
-        {% else %} -->
+      
             <form id="category_form" method="post" action="/rango/add_category/"  enctype="multipart/form-data">
 
                 {% csrf_token %}
@@ -25,8 +19,5 @@
 
                 <input type="submit" name="submit" value="CreateCategory" />
             </form>
-        <!-- {% endif %}
- -->
-    </body>
-
-</html>
+       
+    {% endblock %}
