@@ -3,6 +3,8 @@
 
 	
 	{% block body_block %}
+	<div class="hero-unit">
+		<h1>UE</h1>
 		{% if user.is_authenticated %}
 		<h1>Rango says... hello {{ user.username }}!</h1>
 		<a href="/rango/restricted/">Restricted Page</a><br />
@@ -35,7 +37,7 @@
 		{% else %}
 			<strong>There are no pages present</strong>
 		{% endif %}
-
+		</div>	
 		
 
 	{% endblock %}
