@@ -18,6 +18,12 @@ def encode(item):
 def decode(item):
 	return item.replace('_', ' ')
 
+def get_category_list():
+    cat_list = Category.objects.all()
+    for cat in cat_list:
+        cat.url = encode(cat.name)
+    return cat_list
+
 def index(request):
   
     context = RequestContext(request)
@@ -25,10 +31,11 @@ def index(request):
     # Order the categories by no. likes in descending order.
     # Retrieve the top 5 only - or all if less than 5.
     # Place the list in our context_dict dictionary which will be passed to the template engine.
-    category_list = Category.objects.order_by('-likes')[:10]
-    for category in category_list:
-		#category.url = category.name.replace(' ', '_')
-		category.url = encode(category.name)
+    #category_list = Category.objects.order_by('-likes')[:10]
+  #   for category in category_list:
+		# #category.url = category.name.replace(' ', '_')
+		# category.url = encode(category.name)
+    category_list = get_category_list()
     page_list = Page.objects.order_by('-views')[:10]
     context_dict = {'categories' : category_list, 'pages' : page_list}
     # Cookie session data
