@@ -92,14 +92,21 @@ def category(request, category_name_url):
 	context = RequestContext(request)
 
 	category_name = decode(category_name_url) #category_name_url.replace('_', ' ')
-	context_dict = {'category_name' : category_name}
+	context_dict = {'category_name' : category_name, 'category_name_url': category_name_url}
+    cat_list = get_category_list()
+    context_dict['cat_list'] = cat_list
 	try:
 		category = Category.objects.get(name=category_name)
-		pages = Page.objects.filter(category=category)
+		 pages = Page.objects.filter(category=category).order_by('-views')
 		context_dict['pages'] = pages
 		context_dict['category'] = category
 	except Category.DoesNotExist:
 		pass
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+        if query:
+            result_list = run_query(query)
+            context_dict['result_list'] = result_list
 	return render_to_response('rango/category.html', context_dict, context)
 
 def add_category(request):
