@@ -15,6 +15,32 @@
         <strong>No pages currently in category.</strong>
     {% endif %}
 
+    <div class="container-fluid">
+    <p>Search for a page.</p>
+    <form class="span8 form-search" id="search_form" method="post" action="/rango/category/{{ category_name_url }}/">
+        {% csrf_token %}
+        <input type="text" class="input-long search-query"  name="query" value="{{ category_name }}" id="query" />
+        <button type="submit" class="btn btn-success" name="submit" value="Search">Search</button>
+    </form>
+    </div>
+
+    <div class="container-fluid">
+    {% if result_list %}
+        <!-- Display search results in an ordered list -->
+        <ol>
+            {% for result in result_list %}
+            <li>
+                <strong><a href="{{ result.link }}">{{ result.title }}</a></strong><br />
+                <p>{{ result.summary }}</p>
+            </li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        <br/>
+        <p>No results found</p>
+    {% endif %}
+    </div>
+
     {% if user.is_authenticated %}
        <a href="/rango/category/{{category_name_url}}/add_page/">Add a Page</a>
     {% endif %}
