@@ -12,6 +12,7 @@ from django.contrib.auth import logout
 from datetime import datetime
 from rango.bing_search import run_query
 from django.contrib.auth.models import User
+from django.shortcuts import redirect
 
 def encode(item):
 	return item.replace(' ', '_')
@@ -321,3 +322,20 @@ def profile(request):
     context_dict['user'] = u
     context_dict['userprofile'] = up
     return render_to_response('rango/profile.html', context_dict, context)
+
+def track_url(request):
+    context = RequestContext(request)
+    page_id = None
+    url = '/rango/'
+    if request.method == 'GET':
+        if 'page_id' in request.GET:
+            page_id = request.GET['page_id']
+            try:
+                page = Page.objects.get(id=page_id)
+                page.views = page.views + 1
+                page.save()
+                url = page.url
+            except:
+                pass
+
+    return redirect(url)
